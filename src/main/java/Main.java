@@ -8,7 +8,7 @@ public class Main {
 
         /*
 
-        Todo: Create FileReaders and datastructures and write a comparator 
+        Todo: Create FileReaders and datastructures and write a comparator
          */
 
 
