@@ -8,23 +8,18 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        int number1=5;
-        int number2=6;
-        int number = total(number1,number2);
-        System.out.println(number);
-        ArrayList<Integer> test = listTest(number1,number2);
-        for(int x:test){
-            System.out.println(x);
-        }
+
+
+        String filepath = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\node.csv";
+
+        Map<String,String> mapper = getMapFromNodeCSV(filepath);
+        mapper.keySet().stream().
+                forEach(System.out::println);
+
 
     }
 
-
-        public static int total (int num1, int num2){
-            int num3;
-            num3 = num1 * num2;
-            return num3;
-    }
+    /* Just a test array so I can remember how to interact with a static method returning an arraylist --- disregard */
         public static ArrayList<Integer> listTest(int num1, int num2){
             ArrayList<Integer> arrayList1 = new ArrayList<>();
             arrayList1.add(num1);
