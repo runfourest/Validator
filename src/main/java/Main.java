@@ -1,32 +1,44 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
+
+    }
+
+        int number1 = 5;
+        int number2 = 6;
+
+        public static int total (int num1, int num2){
+            int num3;
+            num3 = num1 * num2;
+            return num3;
 
 
-        /*
-
-        Todo: Create FileReaders and datastructures and write a comparator
-         */
-        Map<String, List<String>> cols = new HashMap<String, List<String>>();
-
-        List<String> colsnames = new ArrayList<String>();
-
-        BufferedReader br = null;
-
-        try{
-            String currentLine;
-            String file = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\node.csv";
-            br = new BufferedReader(new FileReader(file));
-            //why is it throwing a file not found exception...
 
 
+    }
+
+
+    /*Create Node.CSV File*/
+        public static Map<String,String> getMapFromNodeCSV(final String filepath)throws IOException {
+
+            Stream<String> lines = Files.lines(Paths.get(filepath));
+            Map<String,String> resultMap = lines.map(line -> line.split(","))
+                    .collect(Collectors.toMap(line -> line[0], line -> line[1]));
+            lines.close();
+            return resultMap;
         }
 
 
+}
+
+/*Create a method to read the objects csv ... WAY more complicated logic -.-*/
 
 
-}}
+
