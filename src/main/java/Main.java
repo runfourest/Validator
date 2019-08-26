@@ -8,21 +8,29 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        int number1=5;
+        int number2=6;
+        int number = total(number1,number2);
+        System.out.println(number);
+        ArrayList<Integer> test = listTest(number1,number2);
+        for(int x:test){
+            System.out.println(x);
+        }
 
     }
 
-        int number1 = 5;
-        int number2 = 6;
 
         public static int total (int num1, int num2){
             int num3;
             num3 = num1 * num2;
             return num3;
-
-
-
-
     }
+        public static ArrayList<Integer> listTest(int num1, int num2){
+            ArrayList<Integer> arrayList1 = new ArrayList<>();
+            arrayList1.add(num1);
+            arrayList1.add(num2);
+            return arrayList1;
+        }
 
 
     /*Create Node.CSV File*/
