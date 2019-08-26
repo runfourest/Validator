@@ -13,8 +13,14 @@ public class Main {
         String filepath = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\node.csv";
 
         Map<String,String> mapper = getMapFromNodeCSV(filepath);
-        mapper.keySet().stream().
-                forEach(System.out::println);
+        //mapper.keySet().stream().
+        //        forEach(System.out::println);
+
+
+        mapper.values().stream()
+                .forEach(System.out::println);
+
+
 
 
     }
@@ -28,7 +34,10 @@ public class Main {
         }
 
 
-    /*Create Node.CSV File*/
+    /*Create Node.CSV File
+    * Issue is with the .collect method only picking up a single column
+    * 
+    * */
         public static Map<String,String> getMapFromNodeCSV(final String filepath)throws IOException {
 
             Stream<String> lines = Files.lines(Paths.get(filepath));
