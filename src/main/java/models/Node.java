@@ -1,70 +1,59 @@
 package models;
 
+import com.opencsv.bean.CsvBindByPosition;
+
 public class Node {
+    @CsvBindByPosition(position = 0)
+    private String objectId;
+    @CsvBindByPosition(position = 1)
+    private String parentId;
+    @CsvBindByPosition(position = 2)
+    private String objectName;
+    @CsvBindByPosition(position = 3)
+    private String  someOtherObjectId;
 
-    private String objectid;
-    private String parentid;
-    private String objectname;
-    private String someotherobjectid;
 
 
 
-    //crappy constructor
-    public Node(String objectid, String parentid, String objectname, String someotherobjectid){
-
-        this.objectid = objectid;
-        this.parentid = parentid;
-        this.objectname = objectname;
-        this.someotherobjectid = someotherobjectid;
-
+    public String getObjectId() {
+        return objectId;
     }
 
-    public String getObjectid() {
-        return objectid;
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
-    public void setObjectid(String objectid) {
-        this.objectid = objectid;
+    public String getParentId() {
+        return parentId;
     }
 
-    public String getParentid() {
-        return parentid;
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 
-    public void setParentid(String parentid) {
-        this.parentid = parentid;
+    public String getObjectName() {
+        return objectName;
     }
 
-    public String getObjectname() {
-        return objectname;
+    public void setObjectName(String objectName) {
+        this.objectName = objectName;
     }
 
-    public void setObjectname(String objectname) {
-        this.objectname = objectname;
+    public String getSomeOtherObjectId() {
+        return someOtherObjectId;
     }
 
-    public String getSomeotherobjectid() {
-        return someotherobjectid;
+    public void setSomeOtherObjectId(String someOtherObjectId) {
+        this.someOtherObjectId = someOtherObjectId;
     }
-
-    public void setSomeotherobjectid(String someotherobjectid) {
-        this.someotherobjectid = someotherobjectid;
-    }
-
 
     @Override
     public String toString() {
         return "Node{" +
-                "objectid='" + objectid + '\'' +
-                ", parentid='" + parentid + '\'' +
-                ", objectname='" + objectname + '\'' +
-                ", someotherobjectid='" + someotherobjectid + '\'' +
+                "objectId='" + objectId + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", objectName='" + objectName + '\'' +
+                ", someOtherObjectId='" + someOtherObjectId + '\'' +
                 '}';
     }
-
-
-
-
-
-//getters and settersS
 }
