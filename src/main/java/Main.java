@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -18,54 +19,53 @@ public class Main {
     private static final String nodeFilePath = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\node.csv";
     private static final String objectFilePath = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\objects.csv";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
+        List<Objects> objects = readObjects(objectFilePath);
+        List<Node> nodes = readNodes(nodeFilePath);
 
-        try (
-                Reader reader = Files.newBufferedReader(Paths.get(nodeFilePath));
-        ) {
-            CsvToBean<Node> csvToBeanNode = new CsvToBeanBuilder<Node>(reader)
-                    .withType(Node.class)
+
+
+
+
+
+        }
+
+
+public static List<Objects> readObjects (final String objectFilePath) throws Exception{
+        try(
+                Reader reader = Files.newBufferedReader(Paths.get(objectFilePath))
+                ){
+            CsvToBean<Objects> csvToBeanObject = new CsvToBeanBuilder<Objects>(reader)
+                    .withType(Objects.class)
                     .withIgnoreLeadingWhiteSpace(false)
                     .build();
 
-
-            //Iterator is not necessary to create.
-            Iterator<Node> nodeIterator = csvToBeanNode.iterator();
-
-            List<Node> nodes = csvToBeanNode.parse();
-            nodes.forEach(System.out::println);
-        }
-         try(
-                 Reader reader1 =  Files.newBufferedReader(Paths.get(objectFilePath));
-         )
-         {
-             CsvToBean<Objects> csvToBeanObject = new CsvToBeanBuilder<Objects>(reader1)
-                 .withType(Objects.class)
-                 .withIgnoreLeadingWhiteSpace(false)
-                 .build();
-
-             List<Objects> objects = csvToBeanObject.parse();
-             objects.forEach(System.out::println);
-
-
-
-
-
-
-
-
-            }
-
-
-
-
+            List<Objects> objects = csvToBeanObject.parse();
+            return objects;
 
         }
 
+}
 
+public static List<Node> readNodes (final String nodeFilePath) throws Exception{
+    try(
+            Reader reader1 = Files.newBufferedReader(Paths.get(nodeFilePath))
+    ){
+        CsvToBean<Node> csvToBeanObject = new CsvToBeanBuilder<Node>(reader1)
+                .withType(Node.class)
+                .withIgnoreLeadingWhiteSpace(false)
+                .build();
+
+        List<Node> nodes = csvToBeanObject.parse();
+
+
+        return nodes;
 
     }
 
+}
+
+}
 
 
 
@@ -91,53 +91,6 @@ public class Main {
 
 
 
-
-            /***
-             * This is for the static method below
-             */
-
-/*
-
-        Map<String, String> mapper = getMapFromNodeCSV(filepath);
-
-        mapper.values().stream()
-                .forEach(System.out::println);
-
-    }
-
-*/
-
-
-
-
-
-
-
-    /*
-    This is a static Java Method to read a csv and map it to a Map - I don't think this will work anymore
-    because it's not tabular. bummer.
-
-
-     */
-    /*
-
-        public static Map<String, String> getMapFromNodeCSV ( final String filepath) throws IOException {
-            Stream<String> lines = Files.lines(Paths.get(filepath));
-            Map<String, String> resultMap = lines.map(line -> line.split(","))
-                    .collect(Collectors.toMap(line -> line[0], line -> line[2]));
-            lines.close();
-            return resultMap;
-        }
-
-
-        public static List<String[]> readCSVTESTER (Reader reader) throws Exception {
-            CSVReader csvreader = new CSVReader(reader);
-            List<String[]> list = new ArrayList<>();
-            reader.close();
-            csvreader.close();
-            return list;
-        }
-*/
 
 
 
