@@ -10,7 +10,7 @@ public class Node {
     @CsvBindByPosition(position = 2)
     private String objectName;
     @CsvBindByPosition(position = 3)
-    private String  someOtherObjectId;
+    private String  objectType;
 
 
 
@@ -39,12 +39,12 @@ public class Node {
         this.objectName = objectName;
     }
 
-    public String getSomeOtherObjectId() {
-        return someOtherObjectId;
+    public String getObjectType() {
+        return objectType;
     }
 
-    public void setSomeOtherObjectId(String someOtherObjectId) {
-        this.someOtherObjectId = someOtherObjectId;
+    public void setObjectType(String objectType) {
+        this.objectType = objectType;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Node {
                 "objectId='" + objectId + '\'' +
                 ", parentId='" + parentId + '\'' +
                 ", objectName='" + objectName + '\'' +
-                ", someOtherObjectId='" + someOtherObjectId + '\'' +
+                ", objectType='" + objectType + '\'' +
                 '}';
     }
 }
