@@ -19,6 +19,10 @@ public class Objects {
     private String getMantaExpression;
 
 
+
+
+
+
     public String getClassId() {
         return classId;
     }
@@ -58,6 +62,7 @@ public class Objects {
     public void setGetMantaExpression(String getMantaExpression) {
         this.getMantaExpression = getMantaExpression;
     }
+
 
     @Override
     public String toString() {

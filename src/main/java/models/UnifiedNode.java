@@ -15,13 +15,28 @@ public class UnifiedNode {
     private String  objectSource;
     @CsvBindByPosition(position = 5)
     private String  objectSchema;
-    @CsvBindByPosition(position = 5)
+    @CsvBindByPosition(position = 6)
     private String  objectPackage;
+
+    public boolean isInObjectsCsv() {
+        return InObjectsCsv;
+    }
+
+    public void setInObjectsCsv(boolean inObjectsCsv) {
+        InObjectsCsv = inObjectsCsv;
+    }
+
+    @CsvBindByPosition(position = 7)
+    private boolean InObjectsCsv;
 
     public boolean isHasBody() {
         return hasBody;
     }
 
+
+    public String getFullPath() {
+        return getObjectSchema()+"/"+getObjectPackage()+"/"+getObjectName();
+    }
     public void setHasBody(boolean hasBody) {
         this.hasBody = hasBody;
     }
@@ -99,6 +114,7 @@ public class UnifiedNode {
                 ", objectSchema='" + objectSchema + '\'' +
                 ", objectPackage='" + objectPackage + '\'' +
                 ", hasBody='" + hasBody + '\'' +
+                ", InObjectsCsv='" + InObjectsCsv + '\'' +
                 '}';
     }
 
