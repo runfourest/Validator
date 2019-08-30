@@ -12,12 +12,16 @@ import java.util.List;
 
 public class NodeCsv {
     @CsvBindByPosition(position = 0)
+    @CsvBindByName(column = "nodeId")
     private String nodeId;
     @CsvBindByPosition(position = 1)
+    @CsvBindByName(column = "parentNodeId")
     private String parentNodeId;
     @CsvBindByPosition(position = 2)
+    @CsvBindByName(column = "nodeName")
     private String nodeName;
     @CsvBindByPosition(position = 3)
+    @CsvBindByName(column = "nodeType")
     private String nodeType;
 
     private static final Logger LOGGER = LogManager.getLogger(NodeCsv.class);
@@ -30,6 +34,7 @@ public class NodeCsv {
             CsvToBean<NodeCsv> csvToBeanObject = new CsvToBeanBuilder<NodeCsv>(reader1)
                     .withType(NodeCsv.class)
                     .withIgnoreLeadingWhiteSpace(false)
+                    .withFilter(new NodeTypeFilter(new ColumnPositionMappingStrategy<NodeCsv>()))
                     .build();
 
             List<NodeCsv> nodes = csvToBeanObject.parse();
@@ -43,6 +48,23 @@ public class NodeCsv {
 
         }
 
+    }
+
+
+    static class NodeTypeFilter implements CsvToBeanFilter {
+
+        private final MappingStrategy strategy;
+
+
+        private NodeTypeFilter(MappingStrategy strategy) {
+            this.strategy = strategy;
+        }
+
+        public boolean allowLine(String[] line) {
+            String value = line[3];
+            boolean result = !value.matches("Column|ColumnFlow");
+            return result;
+        }
 
     }
 

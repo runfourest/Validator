@@ -10,11 +10,11 @@ import java.util.*;
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
-    /*
-    private static final String nodeFilePath = "src/main/resources/Fidelity/node.csv";
-    private static final String objectFilePath = "src/main/resources/Fidelity/objects.csv";
-    /* */
 
+    private static final String nodeFilePath = "c:/Users/julrych/Downloads/HD-1230/export/csv_export/node.csv";
+    private static final String objectFilePath = "c:/Users/julrych/Downloads/HD-1230/export/iedc_export/objects.csv";
+    /* */
+  /*
     private static final String nodeFilePath = "src/main/resources/Test/node.csv";
     private static final String objectFilePath = "src/main/resources/Test/objects.csv";
     /* */
@@ -52,8 +52,4 @@ public class Main {
 
     }
 
-
-
-
-
-    }
+}
