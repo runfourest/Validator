@@ -19,11 +19,15 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    //private static final String nodeFilePath = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\node.csv";
-    //private static final String objectFilePath = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\objects.csv";
-    private static final String nodeFilePath = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\node.csv";
-    private static final String objectFilePath = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\objects.csv";
-    private static final String outputFilePath = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\output.csv";
+    /*
+    private static final String nodeFilePath = "src/main/resources/Fidelity/node.csv";
+    private static final String objectFilePath = "src/main/resources/Fidelity/objects.csv";
+    /* */
+
+    private static final String nodeFilePath = "src/main/resources/Test/node.csv";
+    private static final String objectFilePath = "src/main/resources/Test/objects.csv";
+    /* */
+    private static final String outputFilePath = "src/main/resources/output.csv";
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
 
@@ -202,13 +206,8 @@ public class Main {
         StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder<>(writer).build();
 
         beanToCsv.write(unl.values());
-        beanToCsv.write(unl.values());
         writer.close();
         }
-
-
-
-
 
 
     }
