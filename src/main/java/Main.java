@@ -1,19 +1,14 @@
-import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.sun.javafx.collections.MappingChange;
 import models.Node;
 import models.Objects;
 import models.UnifiedNode;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
 
@@ -21,9 +16,17 @@ public class Main {
     private static final String objectFilePath = "C:\\Users\\afournier\\IdeaProjects\\valfilechecker\\src\\main\\resources\\objects.csv";
 
     public static void main(String[] args) throws Exception {
-        List<Objects> objects = readObjects(objectFilePath);
+        //why isn't objects map working
+        Map<String, Object> objects = readObjects(objectFilePath);
+
+
         Map<String, UnifiedNode> unl = new HashMap<String, UnifiedNode>();
         Map<String, Node> nodes = readNodes(nodeFilePath);
+
+
+
+
+
 
         for(Node node: nodes.values())   {
             switch (node.getObjectType()) {
@@ -77,7 +80,7 @@ public class Main {
         }
 
 
-public static List<Objects> readObjects (final String objectFilePath) throws Exception{
+public static Map<String, Object> readObjects (final String objectFilePath) throws Exception{
         try(
                 Reader reader = Files.newBufferedReader(Paths.get(objectFilePath))
                 ){
@@ -87,7 +90,11 @@ public static List<Objects> readObjects (final String objectFilePath) throws Exc
                     .build();
 
             List<Objects> objects = csvToBeanObject.parse();
-            return objects;
+            HashMap<String,Object> objectsMap = new HashMap<String,Object>();
+            for (Objects object: objects) {
+                objectsMap.put(object.getClassId(),object);
+            }
+            return objectsMap;
 
         }
 
