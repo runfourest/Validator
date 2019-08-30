@@ -1,48 +1,46 @@
 package models;
 
+import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
 public class UnifiedNode {
     @CsvBindByPosition(position = 0)
+    @CsvBindByName(column = "objectSourceId")
     private String objectSourceId;
     @CsvBindByPosition(position = 1)
-    private String parentId;
-    @CsvBindByPosition(position = 2)
+    @CsvBindByName(column = "objectName")
     private String objectName;
+    @CsvBindByPosition(position = 2)
+    @CsvBindByName(column = "objectType")
+    private String objectType;
     @CsvBindByPosition(position = 3)
-    private String  objectType;
+    @CsvBindByName(column = "objectSource")
+    private String objectSource;
     @CsvBindByPosition(position = 4)
-    private String  objectSource;
+    @CsvBindByName(column = "objectSchema")
+    private String objectSchema;
     @CsvBindByPosition(position = 5)
-    private String  objectSchema;
+    @CsvBindByName(column = "objectPackage")
+    private String objectPackage;
     @CsvBindByPosition(position = 6)
-    private String  objectPackage;
-
-    public boolean isInObjectsCsv() {
-        return InObjectsCsv;
-    }
-
-    public void setInObjectsCsv(boolean inObjectsCsv) {
-        InObjectsCsv = inObjectsCsv;
-    }
-
+    @CsvBindByName(column = "inObjectsCsv")
+    private boolean inObjectsCsv;
     @CsvBindByPosition(position = 7)
-    private boolean InObjectsCsv;
-
-    public boolean isHasBody() {
-        return hasBody;
-    }
-
-
-    public String getFullPath() {
-        return getObjectSchema()+"/"+getObjectPackage()+"/"+getObjectName();
-    }
-    public void setHasBody(boolean hasBody) {
-        this.hasBody = hasBody;
-    }
-
+    @CsvBindByName(column = "hasBody")
     private boolean hasBody;
 
+    public UnifiedNode(String objectSourceId, String objectName, String objectType, String objectSource, String objectSchema, String objectPackage) {
+        this.objectSourceId = objectSourceId;
+        this.objectName = objectName;
+        this.objectType = objectType;
+        this.objectSource = objectSource;
+        this.objectSchema = objectSchema;
+        this.objectPackage = objectPackage;
+    }
+
+    public String getFullPath() {
+        return getObjectSchema() + "/" + getObjectPackage() + "/" + getObjectName();
+    }
 
     public String getObjectSourceId() {
         return objectSourceId;
@@ -50,14 +48,6 @@ public class UnifiedNode {
 
     public void setObjectSourceId(String objectSourceId) {
         this.objectSourceId = objectSourceId;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
     }
 
     public String getObjectName() {
@@ -100,23 +90,33 @@ public class UnifiedNode {
         this.objectPackage = objectPackage;
     }
 
+    public boolean isInObjectsCsv() {
+        return inObjectsCsv;
+    }
 
+    public void setInObjectsCsv(boolean inObjectsCsv) {
+        this.inObjectsCsv = inObjectsCsv;
+    }
 
+    public boolean isHasBody() {
+        return hasBody;
+    }
+
+    public void setHasBody(boolean hasBody) {
+        this.hasBody = hasBody;
+    }
 
     @Override
     public String toString() {
         return "UnifiedNode{" +
-                "objectId='" + objectSourceId + '\'' +
-                ", parentId='" + parentId + '\'' +
+                "objectSourceId='" + objectSourceId + '\'' +
                 ", objectName='" + objectName + '\'' +
                 ", objectType='" + objectType + '\'' +
                 ", objectSource='" + objectSource + '\'' +
                 ", objectSchema='" + objectSchema + '\'' +
                 ", objectPackage='" + objectPackage + '\'' +
-                ", hasBody='" + hasBody + '\'' +
-                ", InObjectsCsv='" + InObjectsCsv + '\'' +
+                ", InObjectsCsv=" + inObjectsCsv +
+                ", hasBody=" + hasBody +
                 '}';
     }
-
-
 }

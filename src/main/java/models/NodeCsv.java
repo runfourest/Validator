@@ -1,6 +1,14 @@
 package models;
 
-import com.opencsv.bean.CsvBindByPosition;
+import com.opencsv.bean.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class NodeCsv {
     @CsvBindByPosition(position = 0)
@@ -12,7 +20,31 @@ public class NodeCsv {
     @CsvBindByPosition(position = 3)
     private String nodeType;
 
+    private static final Logger LOGGER = LogManager.getLogger(NodeCsv.class);
 
+    // Read Csv to Java Pojo
+    public static LinkedHashMap<String, NodeCsv> readFromFile(final String nodeFilePath) throws Exception {
+        try (
+                Reader reader1 = Files.newBufferedReader(Paths.get(nodeFilePath))
+        ) {
+            CsvToBean<NodeCsv> csvToBeanObject = new CsvToBeanBuilder<NodeCsv>(reader1)
+                    .withType(NodeCsv.class)
+                    .withIgnoreLeadingWhiteSpace(false)
+                    .build();
+
+            List<NodeCsv> nodes = csvToBeanObject.parse();
+
+            LinkedHashMap<String, NodeCsv> nodeMap = new LinkedHashMap<String, NodeCsv>();
+            for (NodeCsv node : nodes) {
+                nodeMap.put(node.getNodeId(), node);
+            }
+
+            return nodeMap;
+
+        }
+
+
+    }
 
 
     public String getNodeId() {

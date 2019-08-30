@@ -1,8 +1,15 @@
 package models;
 
 import com.opencsv.bean.CsvBindByPosition;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 
-public class Objects {
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
+public class ObjectCsv {
     @CsvBindByPosition(position = 0)
     private String classId;
 
@@ -19,7 +26,23 @@ public class Objects {
     private String getMantaExpression;
 
 
+    //Read Csv to Java Pojo
+    public static List<ObjectCsv> readFromFile(final String objectFilePath) throws Exception {
+        try (
+                Reader reader = Files.newBufferedReader(Paths.get(objectFilePath))
+        ) {
+            CsvToBean<ObjectCsv> csvToBeanObject = new CsvToBeanBuilder<ObjectCsv>(reader)
+                    .withType(ObjectCsv.class)
+                    .withIgnoreLeadingWhiteSpace(false)
+                    .build();
 
+            List<ObjectCsv> objects = csvToBeanObject.parse();
+
+            return objects;
+
+        }
+
+    }
 
 
 
