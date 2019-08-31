@@ -22,17 +22,16 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-
-        LOGGER.info("Starting the process");
+    LOGGER.info("Starting the process");
         LOGGER.info("reading node.csv");
         LinkedHashMap<String, NodeCsv> nodes = NodeCsv.readFromFile(nodeFilePath);
 
-        LOGGER.info("processing node.csv");
+        LOGGER.info("initializing collection");
         UnifiedNodeCollection unl = new UnifiedNodeCollection();
 
+        LOGGER.info("processing node.csv");
         unl.applyNodeCsv(nodes);
 
-        // step #2
         LOGGER.info("reading objects.csv");
         List<ObjectCsv> objects = ObjectCsv.readFromFile(objectFilePath);
 
@@ -46,8 +45,6 @@ public class Main {
         unl.writeToFile(outputFilePath);
 
         LOGGER.info("Completed");
-
-        /**/
 
     }
 

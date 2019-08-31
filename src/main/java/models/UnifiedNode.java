@@ -38,6 +38,10 @@ public class UnifiedNode {
         this.objectPackage = objectPackage;
     }
 
+    /**
+     * get Full path to an object in form /schema/[package]/object_name
+     * @return full path to the object
+     */
     public String getFullPath() {
         return getObjectSchema() + "/" + getObjectPackage() + "/" + getObjectName();
     }

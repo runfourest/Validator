@@ -26,7 +26,12 @@ public class NodeCsv {
 
     private static final Logger LOGGER = LogManager.getLogger(NodeCsv.class);
 
-    // Read Csv to Java Pojo
+    /**
+     * Read the file into a list of objects
+     * @param objectFilePath including the filename
+     * @return File represented as a Map of objects with objectId as a key
+     * @throws Exception
+     */
     public static LinkedHashMap<String, NodeCsv> readFromFile(final String nodeFilePath) throws Exception {
         try (
                 Reader reader1 = Files.newBufferedReader(Paths.get(nodeFilePath))
@@ -50,7 +55,9 @@ public class NodeCsv {
 
     }
 
-
+    /**
+     * Filter to exclude any Columns and ColumnFlow from the read.
+     */
     static class NodeTypeFilter implements CsvToBeanFilter {
 
         private final MappingStrategy strategy;

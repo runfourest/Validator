@@ -26,7 +26,12 @@ public class ObjectCsv {
     private String getMantaExpression;
 
 
-    //Read Csv to Java Pojo
+    /**
+     * Read the file into a list of objects
+     * @param objectFilePath including the filename
+     * @return File represented as a list of objects
+     * @throws Exception
+     */
     public static List<ObjectCsv> readFromFile(final String objectFilePath) throws Exception {
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(objectFilePath))

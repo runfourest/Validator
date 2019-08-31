@@ -12,8 +12,8 @@ import java.util.*;
 public class UnifiedNodeCollection {
 
     private HashMap<String, UnifiedNode> nodeCsvMap;
-
     private HashMap<String, UnifiedNode> objectsCsvMap;
+
     private static final Logger LOGGER = LogManager.getLogger(NodeCsv.class);
 
     public UnifiedNodeCollection() {
@@ -21,12 +21,20 @@ public class UnifiedNodeCollection {
         objectsCsvMap = new HashMap<String, UnifiedNode>();
     }
 
+    /**
+     * add new object to the collection
+     * @param un object to be added.
+     */
     public void put(UnifiedNode un) {
         nodeCsvMap.put(un.getObjectSourceId(), un);
         objectsCsvMap.put(un.getFullPath(), un);
     }
 
-
+    /**
+     * Write the collection contents into a CSV file
+     * @param outputFilePath path to the file including the filename
+     * @throws Exception
+     */
     public void writeToFile(final String outputFilePath) throws Exception {
         Writer writer = new FileWriter(outputFilePath);
         StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder<>(writer).build();
@@ -48,8 +56,11 @@ public class UnifiedNodeCollection {
     }
 
 
-    // Step #1
-    // convert node.csv to unified objects
+    /**
+     * Convert node.csv to unified objects and insert into this collection.
+     * Should be run as the first step of the processing.
+     * @param nodes Hashmap of the nodes with nodeId as a key.
+     */
     public void applyNodeCsv(Map<String, NodeCsv> nodes) {
         for(NodeCsv node : nodes.values()) {
             switch (node.getNodeType()) {
@@ -109,9 +120,11 @@ public class UnifiedNodeCollection {
         }
     }
 
-
+    /**
+     * Tag the object from the collection based on the object in the parameter based on the object's full path.
+     * @param object object to be matched to an objects in the collection.
+     */
     public void applyObjectCsv(ObjectCsv object) {
-
         // skip all objects that are not procedures
         if (!object.getClassId().equals("com.getmanta.edc.Procedure"))
             return;
