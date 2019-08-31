@@ -14,15 +14,10 @@ import java.util.*;
  */
 public class UnifiedNodeCollection {
 
-    private HashMap<String, UnifiedNode> nodeCsvMap;
-    private HashMap<String, UnifiedNode> objectsCsvMap;
+    private HashMap<String, UnifiedNode> nodeCsvMap = new HashMap<>();
+    private HashMap<String, UnifiedNode> objectsCsvMap = new HashMap<>();
 
     private static final Logger LOGGER = LogManager.getLogger(NodeCsv.class);
-
-    public UnifiedNodeCollection() {
-        nodeCsvMap = new HashMap<String, UnifiedNode>();
-        objectsCsvMap = new HashMap<String, UnifiedNode>();
-    }
 
     /**
      * add new object to the collection
@@ -165,9 +160,9 @@ public class UnifiedNodeCollection {
             LOGGER.debug("Unified object not found for fullname" + fullPath);
             un = new UnifiedNode(
                     fullPath,
+                    objectName,
                     object.getClassId(),
                     "objects.csv",
-                    objectName,
                     objectSchema,
                     objectPackage
             );
