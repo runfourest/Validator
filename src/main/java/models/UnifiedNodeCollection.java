@@ -54,6 +54,7 @@ public class UnifiedNodeCollection {
     }
 
 
+    /* @TODO: handle nested procedures - additional level of hierarchy/*
     /**
      * Convert node.csv to unified objects and insert into this collection.
      * Should be run as the first step of the processing.
@@ -66,8 +67,8 @@ public class UnifiedNodeCollection {
                     // for procedures, create a brand new unified object
                     //System.out.println("Adding new procedure object for" + node.toString());
                     NodeCsv parent = nodes.get(node.getParentNodeId());
-                    String nodeSchema = null;
-                    String nodePackage = null;
+                    String nodeSchema = "";
+                    String nodePackage = "";
 
                     if (parent.getNodeType().equals("Schema"))
                         // parent object is directly schema
@@ -118,6 +119,7 @@ public class UnifiedNodeCollection {
         }
     }
 
+    /* @TODO: handle nested procedures: procedure name= porcedure1.procedure2/*
     /**
      * Tag the object from the collection based on the object in the parameter based on the object's full path.
      * @param object object to be matched to an objects in the collection.
@@ -134,9 +136,9 @@ public class UnifiedNodeCollection {
         String identity = object.getIdentityId();
         String[] idParts = identity.split("/");
         String fullPath = null;
-        String objectName = null;
-        String objectSchema = null;
-        String objectPackage = null;
+        String objectName = "";
+        String objectSchema = "";
+        String objectPackage = "";
 
         if (idParts.length == 5) {
             objectName = idParts[4];
@@ -152,8 +154,15 @@ public class UnifiedNodeCollection {
 
         // mark Unified object as resent in Objects.csv
         UnifiedNode un = this.getByFullPath(fullPath);
+
+        // debugging start
+        if(objectName=="ARM_DEL_FRZ_STATUS" || object.getCoreName() == "ARM_DEL_FRZ_STATUS")
+            LOGGER.warn(object);
+        // debugging end
+
         if (un != null) {
             LOGGER.debug("Unified object  found tagging fullname" + fullPath);
+
             un.setInObjectsCsv(true);
         } else {
             //if Unified object not found, then create it.  This should never happen as all entries from objects.csv should always be in node.csv.
