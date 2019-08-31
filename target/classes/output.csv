@@ -1,0 +1,8 @@
+"180884","TEST_TL_PROC","Procedure","node.csv","DWH","TEST_TL","true","true"
+"34984","IMPORT","Procedure","node.csv","DWH","IMPORT_CRM","true","true"
+"34652","HIST_PARTY","Procedure","node.csv","DWH","HISTORIZATION","true","true"
+"35136","IMPORT","Procedure","node.csv","DWH","IMPORT_LOAN","true","true"
+"35488","VALIDATE","Procedure","node.csv","DWH","IMPORT_LOAN","true","true"
+"35884","REPORT_CLIENT","Procedure","node.csv","DWH","REPORTING","true","true"
+"180936","TEST_SYNONYMS_PROC","Procedure","node.csv","DWH","TEST_SYNONYMS","true","true"
+"34636","FOO","Procedure","node.csv","DWH","","false","false"
