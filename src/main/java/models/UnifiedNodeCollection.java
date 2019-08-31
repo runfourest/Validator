@@ -2,6 +2,7 @@ package models;
 
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,7 +55,7 @@ public class UnifiedNodeCollection {
     }
 
 
-    /* @TODO: handle nested procedures - additional level of hierarchy/*
+    /* @TODO: handle nested procedures - additional level of hierarchy, e.g. SAI_ADMIN.SA_GAA_SSP_UTIL_PKG*
     /**
      * Convert node.csv to unified objects and insert into this collection.
      * Should be run as the first step of the processing.
@@ -66,28 +67,48 @@ public class UnifiedNodeCollection {
                 case "Procedure":
                     // for procedures, create a brand new unified object
                     //System.out.println("Adding new procedure object for" + node.toString());
-                    NodeCsv parent = nodes.get(node.getParentNodeId());
-                    String nodeSchema = "";
-                    String nodePackage = "";
 
-                    if (parent.getNodeType().equals("Schema"))
-                        // parent object is directly schema
-                        nodeSchema = parent.getNodeName();
-                    else if (parent.getNodeType().equals("PLSQL Package")) {
-                        // parent object is Package, then Packe's parent object is schema
-                        nodePackage = parent.getNodeName();
-                        NodeCsv schema = nodes.get(parent.getParentNodeId());
-                        if (schema.getNodeType().equals("Schema"))
-                            nodeSchema = schema.getNodeName();
+                    StringBuilder nodeName = new StringBuilder(node.getNodeName());
+                    String nodeSchema = null;
+                    String nodePackage = null;
+                    StringBuilder fullPath = new StringBuilder(node.getNodeName());
+                    NodeCsv parent = node;
+                    while (!StringUtils.isEmpty(parent.getParentNodeId())) {
+                        String lNodeId = parent.getNodeId();
+                        parent = nodes.get(parent.getParentNodeId());
+                        if (parent == null) {
+                            LOGGER.error("No parent found in nodeCSV file for NodeId=" + lNodeId);
+                            break;
+                        }
+                        switch (parent.getNodeType()) {
+                            case "Schema":
+                                nodeSchema = parent.getNodeName();
+                                fullPath.insert(0, "/");
+                                fullPath.insert(0, nodeSchema);
+                                break;
+                            case "PLSQL Package":
+                                nodePackage = parent.getNodeName();
+                                fullPath.insert(0, "/");
+                                fullPath.insert(0, nodePackage);
+                                break;
+                            case "Procedure":
+                            case "Trigger":
+                                nodeName.insert(0, ".");
+                                nodeName.insert(0, parent.getNodeName());
+                                fullPath.insert(0, ".");
+                                fullPath.insert(0, parent.getNodeName());
+                                break;
+                        }
                     }
                     // store the object into collection
                     UnifiedNode un = new UnifiedNode(
                             node.getNodeId(),
-                            node.getNodeName(),
+                            nodeName.toString(),
                             node.getNodeType(),
                             "node.csv",
                             nodeSchema,
-                            nodePackage
+                            nodePackage,
+                            fullPath.toString()
                     );
                     this.put(un);
                     LOGGER.debug("New procedure object added:" + un.toString());
@@ -119,7 +140,7 @@ public class UnifiedNodeCollection {
         }
     }
 
-    /* @TODO: handle nested procedures: procedure name= porcedure1.procedure2/*
+    /* @TODO: handle nested procedures: procedure name= procedure1.procedure2, e.g.  SAI_ADMIN.SA_GAA_SSP_UTIL_PKG*
     /**
      * Tag the object from the collection based on the object in the parameter based on the object's full path.
      * @param object object to be matched to an objects in the collection.
@@ -129,16 +150,16 @@ public class UnifiedNodeCollection {
         if (!object.getClassId().equals("com.getmanta.edc.Procedure"))
             return;
 
-            /* generated full path as Schema/Package/ProcedureName; expected identity structures are:
-             Identity = "DWH/Packages/IMPORT_CRM/Procedures/IMPORT"
-             Identity = "DWH/Procedures/IMPORT"
-             */
+        /* generated full path as Schema/Package/ProcedureName; expected identity structures are:
+         Identity = "DWH/Packages/IMPORT_CRM/Procedures/IMPORT"
+         Identity = "DWH/Procedures/IMPORT"
+         */
         String identity = object.getIdentityId();
         String[] idParts = identity.split("/");
         String fullPath = null;
-        String objectName = "";
-        String objectSchema = "";
-        String objectPackage = "";
+        String objectName = null;
+        String objectSchema = null;
+        String objectPackage = null;
 
         if (idParts.length == 5) {
             objectName = idParts[4];
@@ -149,33 +170,32 @@ public class UnifiedNodeCollection {
             objectName = idParts[2];
             objectSchema = idParts[0];
             fullPath = objectSchema + "/" + objectName;
-        } else
+        } else {
             fullPath = "unexpected structure " + identity;
+        }
 
         // mark Unified object as resent in Objects.csv
         UnifiedNode un = this.getByFullPath(fullPath);
 
-        // debugging start
-        if(objectName=="ARM_DEL_FRZ_STATUS" || object.getCoreName() == "ARM_DEL_FRZ_STATUS")
-            LOGGER.warn(object);
-        // debugging end
-
         if (un != null) {
-            LOGGER.debug("Unified object  found tagging fullname" + fullPath);
+            LOGGER.debug("Unified object  found tagging fullname " + fullPath);
 
             un.setInObjectsCsv(true);
         } else {
             //if Unified object not found, then create it.  This should never happen as all entries from objects.csv should always be in node.csv.
-            LOGGER.debug("Unified object not found for fullname" + fullPath);
+            LOGGER.info("Unified object not found for fullname" + fullPath);
             un = new UnifiedNode(
                     fullPath,
                     objectName,
                     object.getClassId(),
                     "objects.csv",
                     objectSchema,
-                    objectPackage
+                    objectPackage,
+                    fullPath
             );
             this.put(un);
         }
     }
 }
+
+

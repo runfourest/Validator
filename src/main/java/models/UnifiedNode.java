@@ -2,6 +2,7 @@ package models;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * class that represents target objects consolidated from node.csv and objects.csv.
@@ -31,22 +32,18 @@ public class UnifiedNode {
     @CsvBindByPosition(position = 7)
     @CsvBindByName(column = "hasBody")
     private boolean hasBody;
+    @CsvBindByPosition(position = 8)
+    @CsvBindByName(column = "fullPath")
+    private String fullPath;
 
-    public UnifiedNode(String objectSourceId, String objectName, String objectType, String objectSource, String objectSchema, String objectPackage) {
+    public UnifiedNode(String objectSourceId, String objectName, String objectType, String objectSource, String objectSchema, String objectPackage, String fullPath) {
         this.objectSourceId = objectSourceId;
         this.objectName = objectName;
         this.objectType = objectType;
         this.objectSource = objectSource;
         this.objectSchema = objectSchema;
         this.objectPackage = objectPackage;
-    }
-
-    /**
-     * get Full path to an object in form /schema/[package]/object_name
-     * @return full path to the object
-     */
-    public String getFullPath() {
-        return getObjectSchema() + "/" + getObjectPackage() + "/" + getObjectName();
+        this.fullPath = fullPath;
     }
 
     public String getObjectSourceId() {
@@ -113,6 +110,14 @@ public class UnifiedNode {
         this.hasBody = hasBody;
     }
 
+    public String getFullPath() {
+        return fullPath;
+    }
+
+    public void setFullPath(String fullPath) {
+        this.fullPath = fullPath;
+    }
+
     @Override
     public String toString() {
         return "UnifiedNode{" +
@@ -122,8 +127,9 @@ public class UnifiedNode {
                 ", objectSource='" + objectSource + '\'' +
                 ", objectSchema='" + objectSchema + '\'' +
                 ", objectPackage='" + objectPackage + '\'' +
-                ", InObjectsCsv=" + inObjectsCsv +
-                ", hasBody=" + hasBody +
+                ", InObjectsCsv='" + inObjectsCsv + '\'' +
+                ", hasBody='" + hasBody + '\'' +
+                ", fullPath='" + fullPath + '\'' +
                 '}';
     }
 }
