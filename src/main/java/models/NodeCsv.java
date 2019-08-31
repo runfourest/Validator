@@ -115,10 +115,10 @@ public class NodeCsv {
     @Override
     public String toString() {
         return "Node{" +
-                "objectId='" + nodeId + '\'' +
-                ", parentId='" + parentNodeId + '\'' +
-                ", objectName='" + nodeName + '\'' +
-                ", objectType='" + nodeType + '\'' +
+                "nodeId='" + nodeId + '\'' +
+                ", parentNodeId='" + parentNodeId + '\'' +
+                ", nodeName='" + nodeName + '\'' +
+                ", nodeType='" + nodeType + '\'' +
                 '}';
     }
 }
