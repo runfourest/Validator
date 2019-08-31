@@ -1,6 +1,5 @@
 import models.NodeCsv;
 import models.ObjectCsv;
-import models.UnifiedNode;
 import models.UnifiedNodeCollection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
