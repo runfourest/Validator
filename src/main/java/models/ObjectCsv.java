@@ -9,6 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * class that represents objects from objects.csv
+ */
 public class ObjectCsv {
     @CsvBindByPosition(position = 0)
     private String classId;

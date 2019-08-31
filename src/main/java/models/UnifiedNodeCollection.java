@@ -9,6 +9,9 @@ import java.io.FileWriter;
 import java.io.Writer;
 import java.util.*;
 
+/**
+ * Orchestration class for consolidating operations on UnifiedNodes
+ */
 public class UnifiedNodeCollection {
 
     private HashMap<String, UnifiedNode> nodeCsvMap;

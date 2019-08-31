@@ -3,6 +3,9 @@ package models;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
+/**
+ * class that represents target objects consolidated from node.csv and objects.csv.
+ */
 public class UnifiedNode {
     @CsvBindByPosition(position = 0)
     @CsvBindByName(column = "objectSourceId")

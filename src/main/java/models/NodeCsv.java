@@ -10,6 +10,10 @@ import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+/**
+ * class that represents objects from node.csv
+ */
+
 public class NodeCsv {
     @CsvBindByPosition(position = 0)
     @CsvBindByName(column = "nodeId")
